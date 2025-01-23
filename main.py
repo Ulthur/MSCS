@@ -11,6 +11,7 @@ class testGrid(GridLayout):
         self.add_widget(Label(text="Name: "))
         self.name = TextInput(multiline=False) # Multiline false so you cant add new lines
         self.add_widget(self.name)
+        print("TEST")
         
 
 
