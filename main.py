@@ -1,10 +1,11 @@
 import pandas as pd
 import datetime
+import sys
 x = datetime.datetime.now()
 
 def fetchDay():
    df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSEmrxJzhnV_wvnd2GkiyuVoBviY8kZOhGhBZd7EsraGpzn-9wmCycgWZXAr8tYXSJiBM2GQ-jeLvIt/pub?gid=0&single=true&output=csv')
-   df = df.sort_values(axis=0,na_position='first')
+   df = df.sort_values(by=['MONTH'],axis=0,na_position='first')
    print(df)
    #for item in df['MONTH']:
    # print(item)
@@ -45,3 +46,11 @@ class MyApp(App):
 
 if __name__ == "__main__":
     MyApp().run()
+
+def show_exception_and_exit(exc_type, exc_value, tb):
+    import traceback
+    traceback.print_exception(exc_type, exc_value, tb)
+    input("Press key to exit.")
+    sys.exit(-1)
+
+sys.excepthook = show_exception_and_exit
