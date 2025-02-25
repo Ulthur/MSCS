@@ -32,13 +32,6 @@ class testGrid(GridLayout):
         self.name = TextInput(multiline=False) # Multiline false so you cant add new lines
         self.add_widget(self.name)
 
-        
-
-
-        
-        
-
-
 class MyApp(App):
     def build(self):
         return testGrid()
@@ -46,11 +39,3 @@ class MyApp(App):
 
 if __name__ == "__main__":
     MyApp().run()
-
-def show_exception_and_exit(exc_type, exc_value, tb):
-    import traceback
-    traceback.print_exception(exc_type, exc_value, tb)
-    input("Press key to exit.")
-    sys.exit(-1)
-
-sys.excepthook = show_exception_and_exit
