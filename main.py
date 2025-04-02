@@ -70,13 +70,12 @@ class layout(GridLayout):
     """
     Main class to create the user interface.
     """
-    # Initialize variables
-    text_color = (255,255,255)
-    r,g,b = text_color
-    schoolday = fetchDay()
-    formatted_date = str((str(date.year) + "/" + str(date.month) + "/" + str(date.day)))
-    period = fetchPeriod()
     def __init__(self,**kwargs): # UI organization
+        text_color = (255,255,255)
+        r,g,b = text_color
+        schoolday = fetchDay()
+        formatted_date = str((str(date.year) + "/" + str(date.month) + "/" + str(date.day)))
+        period = fetchPeriod()
         super(layout,self).__init__(**kwargs)
         self.cols = 1
         with self.canvas.before:
