@@ -16,19 +16,15 @@ import numpy as np
 # Kivy Modules #
 from kivy.app import App 
 from kivy.uix.label import Label
-from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.image import Image
-from kivy.uix.button import Button
 from kivy.lang import Builder
 from kivy.graphics.vertex_instructions import Rectangle
 from kivy.graphics.context_instructions import Color
-from kivy.core.window import Window
-
 # Functions #
 
-with open("format.kv",encoding='utf8') as formatFile:
-          Builder.load_string(formatFile.read())
+
 
 def fetchDay():
     """
@@ -68,86 +64,42 @@ def fetchPeriod():
         period = ' not schooltime.'
     return period
 
-
 # Classes #
 
-class layout(FloatLayout):
+class layout(GridLayout):
     """
     Main class to create the user interface.
     """
     def __init__(self,**kwargs): # UI organization
-        textColor = 'black'
+        text_color = (255,255,255)
+        r,g,b = text_color
         schoolday = fetchDay()
         formatted_date = str((str(date.year) + "/" + str(date.month) + "/" + str(date.day)))
         period = fetchPeriod()
         super(layout,self).__init__(**kwargs)
-        self.theme = 'Light'
+        self.cols = 1
+        with self.canvas.before:
+            Color(255,255,255,1)
+            self.rect = Rectangle(
+                size = self.size,
+                pos = self.pos
+            )
         # Adding UI elements
-        Logo = Image(
-            source='logo.png',
-            size_hint=(None,None),
-            size=(Window.width/3.5,Window.width/3.5),
-            pos_hint={'center_x':0.5,'center_y':0.8},
-        )
-        self.add_widget(Logo)
-        #self.add_widget()
-        self.add_widget(Label(
-            text='Merivale Secondary Calendar System',
-            size_hint=(None,None),
-            size=(Window.width/3.5,Window.width/3.5),
-            pos_hint={'center_x':0.5,'center_y':0.6},
-            color='black',
-            font_size=20))
-        self.add_widget(Label(
-            size_hint=(None,None),
-            size=(Window.width/2.5,Window.width/2.5),
-            pos_hint={'center_x':0.5,'center_y':0.45},
-            color='black',
-            font_size=18,
-            halign='center',
-            text="The date is "+ formatted_date + '\n\n Today is a Day '+schoolday+' .'))
-        self.add_widget(Label(
-            size_hint=(None,None),
-            size=(Window.width/2.5,Window.width/2.5),
-            pos_hint={'center_x':0.5,'center_y':0.3},
-            color='black',
-            font_size=18,
-            halign='center',
-            text="It is currently "+  str(period) + '.'))
-        themeButton = Button(
-          text='Change Theme',
-          size_hint=(None,None),
-          size=(Window.width/4,Window.height/15),
-          pos_hint={'center_x':0.5,'center_y':0.05},
-          
-        )
-        themeButton.bind(on_press=self.changeTheme)
-        self.add_widget(themeButton)
-    def changeTheme(self,none):
-        # TODO: Get this stupid thing to work
-        # PROBLEMS:
-        # Kivy has a demented way of handling function paramters so I need to figure out
-        # how to get the damn thing to actually change and access variables
-        if self.theme == 'dark':
-            Window.clearcolor = 'black'
-            textColor = 'white'
-        elif self.theme == 'light':
-            Window.clearcolor = 'white'
-            textColor = 'black'
+        self.add_widget(Image(source='logo.png',width=20,height=20))
+        self.add_widget(Label(font_size = 20,halign='center',text="Merivale Highschool Calendar System"))
+        self.add_widget(Label(font_size = 28,halign='center',text="The date is "+ formatted_date + '\n Today is a Day '+schoolday+' .'))
+        self.add_widget(Label(font_size = 22,halign='center',text="It is currently "+period))
+        
 
 # App Runtime #
 
-class AppRuntime(App):
+class MyApp(App):
     """
     App builder
     """
-    Window.clearcolor = (1,1,1,1)
-    
     def build(self):
-        self.root = root = layout()
     
-    
-        
+        return layout()
 
 if __name__ == "__main__":
-    AppRuntime().run()
+    MyApp().run()
