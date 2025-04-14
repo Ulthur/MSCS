@@ -6,7 +6,6 @@ Program to display the current school day and any special
 events corresponding to the Merivale High School calendar.
 """
 
-
 # Libraries #
 import pandas as pd
 import datetime
@@ -28,11 +27,11 @@ from kivy.graphics.context_instructions import Color
 
 
 def fetchDay():
-    
-    #Function to find the corresponding school day to the current date.
-    
+    """
+    Function to find the corresponding school day to the current date.
+    """
     weekday = date.strftime('%A')
-    #Get CSV from Google Sheets sharing link (so we don't have to use their godawful API), use Pandas to turn it into dataframe
+    # Get CSV from Google Sheets sharing link (so we don't have to use their godawful API), use Pandas to turn it into dataframe
     calendar = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSEmrxJzhnV_wvnd2GkiyuVoBviY8kZOhGhBZd7EsraGpzn-9wmCycgWZXAr8tYXSJiBM2GQ-jeLvIt/pub?gid=0&single=true&output=csv')
     schoolday = None
     for i,row in calendar.iterrows(): # Sort through spreadsheet rows
@@ -87,7 +86,7 @@ class layout(GridLayout):
             )
         # Adding UI elements
         self.add_widget(Image(source='logo.png',width=20,height=20))
-        self.add_widget(Label(font_size = 20,halign='center',text="Merivale High School Calendar System"))
+        self.add_widget(Label(font_size = 20,halign='center',text="Merivale Highschool Calendar System"))
         self.add_widget(Label(font_size = 28,halign='center',text="The date is "+ formatted_date + '\n Today is a Day '+schoolday+' .'))
         self.add_widget(Label(font_size = 22,halign='center',text="It is currently "+period))
         
@@ -95,9 +94,9 @@ class layout(GridLayout):
 # App Runtime #
 
 class MyApp(App):
-
-    #App builder
-    
+    """
+    App builder
+    """
     def build(self):
     
         return layout()
